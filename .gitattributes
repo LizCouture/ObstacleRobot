@@ -1,0 +1,5 @@
+# stop git from trying to merge these by setting them to binary. 
+# should have Unity->Edit->Project Settings->Asset Serialization->Mode set to Force Text.
+*.unity binary
+*.prefab binary
+*.asset binary
