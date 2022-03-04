@@ -12,11 +12,13 @@ public class Robot : MonoBehaviour
     private GameObject target;
 
     private Rigidbody rb;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -47,8 +49,13 @@ public class Robot : MonoBehaviour
     }
 
     void MoveTowardsTarget() {
+        anim.SetTrigger("startRunning");
         Vector3 movementVector = transform.forward;
         movementVector = movementVector.normalized * moveSpeed * Time.deltaTime;
         rb.MovePosition(transform.position + movementVector);
+    }
+
+    public void foundTarget() {
+        anim.SetTrigger("foundTarget");
     }
 }
