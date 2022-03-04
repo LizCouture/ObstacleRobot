@@ -6,6 +6,10 @@ public class Target : MonoBehaviour
 {
     [SerializeField]
     GameObject robot;
+
+    private void Start() {
+        robot = GameObject.FindGameObjectWithTag("Robot");
+    }
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject == robot)
             Destroy(gameObject);

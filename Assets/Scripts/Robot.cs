@@ -26,6 +26,11 @@ public class Robot : MonoBehaviour
             RotateToFaceTarget();
 
             MoveTowardsTarget();
+        } else {
+            GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
+            if (targets.Length >= 1) {
+                target = targets[0];
+            }
         }
     }
 
