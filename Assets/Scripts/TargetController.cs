@@ -21,14 +21,12 @@ public class TargetController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit)) {
-            if (Input.GetMouseButtonDown(0)) {
-                Vector3 spawnLocation = new Vector3(hit.point.x, 1.5f, hit.point.z);
-                spawnTarget(spawnLocation);
-                ensureOneTargetInScene();
-            }
-        }
+        
+    }
+
+    public void setTargetLocation(Vector3 targetLocation) {
+        spawnTarget(targetLocation);
+        ensureOneTargetInScene();
     }
 
     void ensureOneTargetInScene() {
