@@ -11,6 +11,9 @@ public class Robot : MonoBehaviour
     [SerializeField]
     private GameObject target;
 
+    [SerializeField]
+    private LineRenderer line;
+
     private Rigidbody rb;
     private Animator anim;
 
@@ -19,19 +22,26 @@ public class Robot : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+
+        line.SetPosition(0, transform.position);
+        line.SetPosition(1, transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
+        line.SetPosition(0, transform.position);
         if (target) {
             RotateToFaceTarget();
 
             MoveTowardsTarget();
+            line.SetPosition(1, target.transform.position);
         } else {
+            line.SetPosition(1, transform.position);
             GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
             if (targets.Length >= 1) {
                 target = targets[0];
+                line.SetPosition(1, target.transform.position);
             }
         }
     }
