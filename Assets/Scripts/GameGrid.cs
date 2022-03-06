@@ -13,8 +13,16 @@ public class GameGrid : MonoBehaviour
 
     GameObject[,] gameGrid;
 
+    public int GetHeight() {
+        return height;
+    }
+
+    public int GetWidth() {
+        return width;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         createGrid(); 
     }
@@ -50,5 +58,27 @@ public class GameGrid : MonoBehaviour
         float y = gridPos.y * gridSpaceSize;
 
         return new Vector3(x, y, 0);
+    }
+
+    public void InstantiateObjectOnGrid(GameObject go, Vector2Int gridPos) {
+        gameGrid[gridPos.x, gridPos.y].GetComponent<GridCell>().instantiateObjectOnCell(go);
+    }
+
+    // Accepts an object THAT IS NOT YET ON THE GRID and moves it to a specific cell
+    public void MoveObjectToCell(GameObject go, Vector2Int to) {
+        gameGrid[to.x, to.y].GetComponent<GridCell>().moveObjectToCell(go);
+    }
+
+    // Moves the object on a given occupied cell to another cell
+    public void MoveObjectFromCellToCell(Vector2Int from, Vector2Int to) {
+        GridCell fromCell = gameGrid[from.x, from.y].GetComponent<GridCell>();
+
+        if (!fromCell.isOccupied) {
+            Debug.LogError("ERROR:  Attempted to move Object from empty cell " + from);
+        } else {
+            GameObject objectOnCell = fromCell.objectInThisGridSpace;
+            gameGrid[to.x, to.y].GetComponent<GridCell>().moveObjectToCell(objectOnCell);
+            fromCell.removeObjectFromCell();
+        }
     }
 }

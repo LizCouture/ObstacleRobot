@@ -17,6 +17,8 @@ public class Robot : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
 
+    private bool gridMode = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,23 +32,25 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        line.SetPosition(0, transform.position);
-        if (target) {
-            RotateToFaceTarget();
+        if (!gridMode) {
+            line.SetPosition(0, transform.position);
+            if (target) {
+                rotateToFaceTarget();
 
-            MoveTowardsTarget();
-            line.SetPosition(1, target.transform.position);
-        } else {
-            line.SetPosition(1, transform.position);
-            GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
-            if (targets.Length >= 1) {
-                target = targets[0];
+                moveTowardsTarget();
                 line.SetPosition(1, target.transform.position);
+            } else {
+                line.SetPosition(1, transform.position);
+                GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
+                if (targets.Length >= 1) {
+                    target = targets[0];
+                    line.SetPosition(1, target.transform.position);
+                }
             }
         }
     }
 
-    void RotateToFaceTarget() {
+    void rotateToFaceTarget() {
         Vector3 targetDir = transform.position - target.transform.position;
         Vector3 forward = transform.forward;
         Vector3 localTarget = transform.InverseTransformPoint(target.transform.position);
@@ -58,14 +62,18 @@ public class Robot : MonoBehaviour
         rb.MoveRotation(rb.rotation * deltaRotation);
     }
 
-    void MoveTowardsTarget() {
+    void moveTowardsTarget() {
         anim.SetTrigger("startRunning");
         Vector3 movementVector = transform.forward;
         movementVector = movementVector.normalized * moveSpeed * Time.deltaTime;
         rb.MovePosition(transform.position + movementVector);
     }
 
-    public void foundTarget() {
+    public void FoundTarget() {
         anim.SetTrigger("foundTarget");
+    }
+
+    public void SetGridMode(bool mode) {
+        gridMode = mode;
     }
 }

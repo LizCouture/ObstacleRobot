@@ -12,7 +12,7 @@ public class Target : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject == robot)
-            robot.GetComponent<Robot>().foundTarget();
+            robot.GetComponent<Robot>().FoundTarget();
             Destroy(gameObject);
     }
 }

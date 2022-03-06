@@ -9,10 +9,12 @@ public class ObstacleController : MonoBehaviour
     [SerializeField]
     GameObject obstacleParent;
 
-    public void spawnObstacle(Vector3 spawnLocation) {
+    public GameObject spawnObstacle(Vector3 spawnLocation) {
         GameObject prefabToSpawn = randomPrefab();
         GameObject newObstacle = Instantiate(prefabToSpawn, spawnLocation, prefabToSpawn.transform.rotation);
+        newObstacle.transform.Rotate(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         newObstacle.transform.SetParent(obstacleParent.transform);
+        return newObstacle;
     }
 
     GameObject randomPrefab() {

@@ -9,13 +9,17 @@ public class TargetController : MonoBehaviour
     Ray ray;
     RaycastHit hit;
 
+    private bool gridMode = false;
+
     // Start is called before the first frame update
     void Start()
     {
-     if (!targetPrefab) {
+        if (!targetPrefab) {
             Debug.Log("No target prefab to instantiate.");
         }
-        ensureOneTargetInScene();
+        if (!gridMode) {
+            ensureOneTargetInScene();
+        }
     }
 
     // Update is called once per frame
@@ -24,9 +28,10 @@ public class TargetController : MonoBehaviour
         
     }
 
-    public void setTargetLocation(Vector3 targetLocation) {
-        spawnTarget(targetLocation);
+    public GameObject setTargetLocation(Vector3 targetLocation) {
+        GameObject target = spawnTarget(targetLocation);
         ensureOneTargetInScene();
+        return target;
     }
 
     void ensureOneTargetInScene() {
@@ -40,12 +45,16 @@ public class TargetController : MonoBehaviour
         }
     }
 
-    void spawnTarget(Vector3 spawnLocation) {
-        Instantiate(targetPrefab, spawnLocation, Quaternion.identity);
+    GameObject spawnTarget(Vector3 spawnLocation) {
+        return Instantiate(targetPrefab, spawnLocation, Quaternion.identity);
     }
 
     Vector3 randomLocation() {
         // This is a magic number but I'm lazy.  It's a point 2 units off the ground, at a random point within the size of the ground plane.
         return new Vector3(Random.Range(-38, 38), 2, Random.Range(-38, 38));
+    }
+
+    public void SetGridMode(bool mode) {
+        gridMode = mode;
     }
 }
