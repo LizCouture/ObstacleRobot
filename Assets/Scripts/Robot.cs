@@ -14,6 +14,9 @@ public class Robot : MonoBehaviour
     [SerializeField]
     private LineRenderer line;
 
+    [SerializeField]
+    int extraForce = 3;
+
     private Rigidbody rb;
     private Animator anim;
 
@@ -75,5 +78,12 @@ public class Robot : MonoBehaviour
 
     public void SetGridMode(bool mode) {
         gridMode = mode;
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "Obstacle") {
+            Vector3 dir = collision.contacts[0].point - transform.position;
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(dir * extraForce);
+        }
     }
 }

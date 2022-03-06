@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1204920801437465867}
   m_Layer: 0
   m_Name: Kettle
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

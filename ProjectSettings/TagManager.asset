@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Target
   - Robot
+  - Obstacle
   layers:
   - Default
   - TransparentFX
